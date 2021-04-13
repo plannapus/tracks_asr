@@ -1,0 +1,39 @@
+(1) Diadectomorpha as sistergoup to Amniota and Varanopidae as Pelycosauria		
+Node Root	((1+2+3)+(4+(5+((6+7)+((8+(9+(10+11+12+(13+14))))+((15+(16+17))+(18+((19+20)+(21+22)))))))))	354
+Node A Temnospondyli	(1+2+3)	314
+Node C Reptiliomorpha	(4+(5+((6+7)+((8+(9+(10+11+12+(13+14))))+((15+(16+17))+(18+((19+20)+(21+22))))))))	351
+Node D (derived Reptiliomorpha)	(5+((6+7)+((8+(9+(10+11+12+(13+14))))+((15+(16+17))+(18+((19+20)+(21+22)))))))	348
+Node E (derived Reptiliomorpha)	((6+7)+((8+(9+(10+11+12+(13+14))))+((15+(16+17))+(18+((19+20)+(21+22))))))	345
+Node B Lepospondyli	(6+7)	323
+Node F Cotylosauria	((8+(9+(10+11+12+(13+14))))+((15+(16+17))+(18+((19+20)+(21+22)))))	326
+Node G Diadectomorpha	(8+(9+(10+11+12+(13+14))))	320
+Node H Diadectidae	(9+(10+11+12+(13+14)))	317
+Node I (derived Diadectidae)	(10+11+12+(13+14))	314
+Node J (derived Diadectidae)	(13+14)	300
+Node K Amniota	((15+(16+17))+(18+((19+20)+(21+22))))	323
+Node L Pelycosauria	(15+(16+17))	320
+Node M (derived Pelycosauria)	(16+17)	317
+Node N Reptilia	(18+((19+20)+(21+22)))	320
+Node O Eureptilia	((19+20)+(21+22))	317
+Node P Captorhinidae	(19+20)	300
+Node Q Romeriida	(21+22)	314
+		
+(3) Diadectomorpha as sistergoup to Amniota and Varanopidae as Diapsida		
+Node Root	((1+2+3)+(4+(5+((6+7)+((8+(9+(10+11+12+(13+14))))+((15+17)+(18+((19+20)+(21+(22+16))))))))))	354
+Node A Temnospondyli	(1+2+3)	314
+Node C Reptiliomorpha	(4+(5+((6+7)+((8+(9+(10+11+12+(13+14))))+((15+17)+(18+((19+20)+(21+(22+16)))))))))	351
+Node D (derived Reptiliomorpha)	(5+((6+7)+((8+(9+(10+11+12+(13+14))))+((15+17)+(18+((19+20)+(21+(22+16))))))))	348
+Node E (derived Reptiliomorpha)	((6+7)+((8+(9+(10+11+12+(13+14))))+((15+17)+(18+((19+20)+(21+(22+16)))))))	345
+Node B Lepospondyli	(6+7)	323
+Node F Cotylosauria	((8+(9+(10+11+12+(13+14))))+((15+17)+(18+((19+20)+(21+(22+16))))))	326
+Node G Diadectomorpha	(8+(9+(10+11+12+(13+14))))	320
+Node H Diadectidae	(9+(10+11+12+(13+14)))	317
+Node I (derived Diadectidae)	(10+11+12+(13+14))	314
+Node J (derived Diadectidae)	(13+14)	300
+Node K Amniota	((15+17)+(18+((19+20)+(21+(22+16)))))	323
+Node L Pelycosauria	(15+17)	320
+Node N Reptilia	(18+((19+20)+(21+(22+16))))	320
+Node O Eureptilia	((19+20)+(21+(22+16)))	317
+Node P Captorhinidae	(19+20)	300
+Node Q Romeriida	(21+(22+16))	314
+Node T Diapsida	(22+16)	311
