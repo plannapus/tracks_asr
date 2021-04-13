@@ -34,7 +34,7 @@ n_tax <- length(unique(specimens[,1]))
 n_tree <- length(tr)
 
 # Mean Tracks
-mean_j <- list()
+iA <- list()
 for(j in 1:n_tax){
   all <- specimens[specimens[,1]==j,colnames(specimens)%in%all_char]
   if(nrow(all)>1){
@@ -42,15 +42,15 @@ for(j in 1:n_tax){
     iCRV <- crv[!rowSums(is.na(all)),]
     inst <- all[!rowSums(is.na(all)),]
     if(nrow(inst)>1){
-      mean_j[[j]] <- inst[which.min(apply(iCRV,1,function(x)sqrt(sum(x^2)))),]
+      iA[[j]] <- inst[which.min(apply(iCRV,1,function(x)sqrt(sum(x^2)))),]
     }else{
-      mean_j[[j]] <- inst
+      iA[[j]] <- inst
     }
   }else{
-    mean_j[[j]] <- all
+    iA[[j]] <- all
   }
 }
-meantracks <- do.call(rbind,mean_j )
+meantracks <- do.call(rbind,iA)
 meantracks$taxa <- 1:n_tax
 
 # ACE based on mean tracks
@@ -134,8 +134,8 @@ M2$pmax <- sprintf("%.3f (%.3f-%.3f)", pmax_ace[[2]]$ace,pmax_ace[[2]]$CI95[,1],
 M1$node<-sapply(Descendants(dat$trees[[1]],23:43),function(x)paste(dat$trees[[1]]$tip.label[x],collapse="+"))
 M2$node<-sapply(Descendants(dat$trees[[2]],23:43),function(x)paste(dat$trees[[2]]$tip.label[x],collapse="+"))
 
-write.table(M1,"ACE1.csv",sep="\t",row.names=FALSE)
-write.table(M2,"ACE2.csv",sep="\t",row.names=FALSE)
+#write.table(M1,"ACE1.csv",sep="\t",row.names=FALSE)
+#write.table(M2,"ACE2.csv",sep="\t",row.names=FALSE)
 
 # Make plots for the log characters
 for(i in 1:2){
@@ -167,55 +167,55 @@ bs_ace2 <- hsp_independent_contrasts(dat$trees[[2]],sapply(dat$trees[[2]]$tip.la
 write.table(cbind(bs_ace,c(1:22,sapply(Descendants(dat$trees[[1]],23:43),function(x)paste(dat$trees[[1]]$tip.label[x],collapse="+")))),file="bs_ace.csv",sep="\t")
 write.table(cbind(bs_ace2,c(1:22,sapply(Descendants(dat$trees[[2]],23:43),function(x)paste(dat$trees[[2]]$tip.label[x],collapse="+")))),file="bs_ace2.csv",sep="\t")
 
-#bi_ace <- hsp_mk_model(dat$trees[[1]],sapply(dat$trees[[1]]$tip.label,function(x)1+as.integer(bodysize[mv[,2]==x]>0)),Nstates=2)
-#bi_ace2 <- hsp_mk_model(dat$trees[[2]],sapply(dat$trees[[2]]$tip.label,function(x)1+as.integer(bodysize[mv[,2]==x]>0)),Nstates=2)
+bi_ace <- hsp_mk_model(dat$trees[[1]],sapply(dat$trees[[1]]$tip.label,function(x)1+as.integer(bodysize[mv[,2]==x]>0)),Nstates=2)
+bi_ace2 <- hsp_mk_model(dat$trees[[2]],sapply(dat$trees[[2]]$tip.label,function(x)1+as.integer(bodysize[mv[,2]==x]>0)),Nstates=2)
 
-# t1 <- dat$trees[[1]]
-# t1$tip.label <- sapply(t1$tip.label,function(x)species_name[as.integer(x)])
-# pdf("bodymarks_binary.pdf",h=16,w=16)
-# par(cex=1)
-# plot(t1,label.offset=1)
-# tiplabels(pie=bi_ace$likelihood[1:22,],cex=0.5,piecol=c("black","white"))
-# nodelabels(pie=bi_ace$likelihood[23:43,],cex=0.5,piecol=c("black","white"))
-# dev.off()
-# 
-# t2 <- dat$trees[[2]]
-# t2$tip.label <- sapply(t2$tip.label,function(x)species_name[as.integer(x)])
-# pdf("bodymarks_binary2.pdf",h=16,w=16)
-# par(cex=1)
-# plot(t2,label.offset=1)
-# tiplabels(pie=bi_ace2$likelihood[1:22,],cex=0.5,piecol=c("black","white"))
-# nodelabels(pie=bi_ace2$likelihood[23:43,],cex=0.5,piecol=c("black","white"))
-# dev.off()
-# 
-# bs <- cut(bodysize,c(0,.25,.5,.75,1),right=TRUE,include.lowest=TRUE)
-# bmp1_ace1 <- hsp_mk_model(dat$trees[[1]],
-#                           sapply(dat$trees[[1]]$tip.label,function(x)as.integer(bs[mv[,2]==x])),
-#                           rate_model="SUEDE",Nstates=4)
-# bmp1_ace2 <- hsp_mk_model(dat$trees[[2]],
-#                           sapply(dat$trees[[2]]$tip.label,function(x)as.integer(bs[mv[,2]==x])),
-#                           rate_model="SUEDE",Nstates=4)
-# 
-# bs <- as.integer(cut(bodysize,c(0,1e-5,1/3,1,2),right=FALSE))
-# bmp2_ace1 <- hsp_mk_model(dat$trees[[1]],
-#                           sapply(dat$trees[[1]]$tip.label,function(x)as.integer(bs[mv[,2]==x])),
-#                           rate_model="SUEDE",Nstates=4)
-# bmp2_ace2 <- hsp_mk_model(dat$trees[[2]],
-#                           sapply(dat$trees[[2]]$tip.label,function(x)as.integer(bs[mv[,2]==x])),
-#                           rate_model="SUEDE",Nstates=4)
-# pdf("bodymarks_none_few_all1.pdf",h=16,w=16)
-# par(cex=1)
-# plot(t1,label.offset=1)
-# tiplabels(pie=bmp2_ace1$likelihood[1:22,],cex=0.5,piecol=c("black","grey50","grey80","white"))
-# nodelabels(pie=bmp2_ace1$likelihood[23:43,],cex=0.5,piecol=c("black","grey50","grey80","white"))
-# dev.off()
-# 
-# pdf("bodymarks_none_few_all2.pdf",h=16,w=16)
-# par(cex=1)
-# plot(t2,label.offset=1)
-# tiplabels(pie=bmp2_ace2$likelihood[1:22,],cex=0.5,piecol=c("black","grey50","grey80","white"))
-# nodelabels(pie=bmp2_ace2$likelihood[23:43,],cex=0.5,piecol=c("black","grey50","grey80","white"))
-# dev.off()
+t1 <- dat$trees[[1]]
+t1$tip.label <- sapply(t1$tip.label,function(x)species_name[as.integer(x)])
+pdf("bodymarks_binary.pdf",h=16,w=16)
+par(cex=1)
+plot(t1,label.offset=1)
+tiplabels(pie=bi_ace$likelihood[1:22,],cex=0.5,piecol=c("black","white"))
+nodelabels(pie=bi_ace$likelihood[23:43,],cex=0.5,piecol=c("black","white"))
+dev.off()
+
+t2 <- dat$trees[[2]]
+t2$tip.label <- sapply(t2$tip.label,function(x)species_name[as.integer(x)])
+pdf("bodymarks_binary2.pdf",h=16,w=16)
+par(cex=1)
+plot(t2,label.offset=1)
+tiplabels(pie=bi_ace2$likelihood[1:22,],cex=0.5,piecol=c("black","white"))
+nodelabels(pie=bi_ace2$likelihood[23:43,],cex=0.5,piecol=c("black","white"))
+dev.off()
+
+bs <- cut(bodysize,c(0,.25,.5,.75,1),right=TRUE,include.lowest=TRUE)
+bmp1_ace1 <- hsp_mk_model(dat$trees[[1]],
+                          sapply(dat$trees[[1]]$tip.label,function(x)as.integer(bs[mv[,2]==x])),
+                          rate_model="SUEDE",Nstates=4)
+bmp1_ace2 <- hsp_mk_model(dat$trees[[2]],
+                          sapply(dat$trees[[2]]$tip.label,function(x)as.integer(bs[mv[,2]==x])),
+                          rate_model="SUEDE",Nstates=4)
+
+bs <- as.integer(cut(bodysize,c(0,1e-5,1/3,1,2),right=FALSE))
+bmp2_ace1 <- hsp_mk_model(dat$trees[[1]],
+                          sapply(dat$trees[[1]]$tip.label,function(x)as.integer(bs[mv[,2]==x])),
+                          rate_model="SUEDE",Nstates=4)
+bmp2_ace2 <- hsp_mk_model(dat$trees[[2]],
+                          sapply(dat$trees[[2]]$tip.label,function(x)as.integer(bs[mv[,2]==x])),
+                          rate_model="SUEDE",Nstates=4)
+pdf("bodymarks_none_few_all1.pdf",h=16,w=16)
+par(cex=1)
+plot(t1,label.offset=1)
+tiplabels(pie=bmp2_ace1$likelihood[1:22,],cex=0.5,piecol=c("black","grey50","grey80","white"))
+nodelabels(pie=bmp2_ace1$likelihood[23:43,],cex=0.5,piecol=c("black","grey50","grey80","white"))
+dev.off()
+
+pdf("bodymarks_none_few_all2.pdf",h=16,w=16)
+par(cex=1)
+plot(t2,label.offset=1)
+tiplabels(pie=bmp2_ace2$likelihood[1:22,],cex=0.5,piecol=c("black","grey50","grey80","white"))
+nodelabels(pie=bmp2_ace2$likelihood[23:43,],cex=0.5,piecol=c("black","grey50","grey80","white"))
+dev.off()
 
 
 #Comparisons with Node K
